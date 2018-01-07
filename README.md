@@ -1,17 +1,41 @@
-# Guess
+# VueApp project skeleton
 
-A simple guessing game made with Vue and HapiJS as the backend. Uses websockets to
-pass info about drawing between clients.
+This is an application skeleton built with Vue and HapiJS and Mongodb. Backend has a
+simple CRUD api for users operations. It also can serve the frontend and its
+assets accordingly.
 
 ### Features
 
+- Registration
+  * Users can register new accounts
 - Login
-- Display and allow drawing to the canvas
-- Display connected client list
-- Wait for atleast 2 players to be connected before starting
+  * Users can login to the application via JWT based authentication
 
 ### TODO
 
-- Give a turn to draw to somebody randomly
-- Allow players to actually guess the drawing
-- Timelimit
+- Improve user registration
+- Improve environment setup
+- Add content inside the authenticated application
+
+### How to run
+
+Add `.env` file to the `/docker` folder. You can edit the `.example.env` file and then change its
+filename to `.env`.
+
+Example
+
+```
+DB_HOST=mongodb               // Host name linked in docker-compose file, should be mongodb
+DB_PORT=27017
+JWT_SECRET=SomeSecret
+TOKEN_EXPIRY=86400
+MONGODB_DATABASE=own          // Database to create on initial run
+MONGODB_ROOT_PASSWORD=rootpw  // Creates a root user with the given pw
+MONGODB_USERNAME=username     // Username to login with restricted rights
+MONGODB_PASSWORD=password
+```
+
+Then run `/docker/start_service.sh` to start the service. It runs mongodb first and then
+waits for it to be ready before running the application server itself.
+
+Stop service `/docker/stop_service.sh`

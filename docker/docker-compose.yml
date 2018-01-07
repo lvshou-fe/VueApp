@@ -1,0 +1,26 @@
+version: '2.1'
+
+services:
+  app:
+    image: 'guess:latest'
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    ports:
+      - "3334:3334"
+    env_file:
+      - .env
+  mongodb:
+    image: 'bitnami/mongodb:latest'
+    restart: always
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    volumes:
+      - "/var/mongo/data:/bitnami"

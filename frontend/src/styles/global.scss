@@ -1,0 +1,12 @@
+@import "forms";
+
+$base_color: #2c3e50;
+
+a {
+  color: $base_color;
+  transition: all 0.3s ease 0s;
+
+  &:hover {
+    color: lighten($base_color, 30);
+  }
+}
