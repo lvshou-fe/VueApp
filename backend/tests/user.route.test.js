@@ -1,20 +1,18 @@
 const server = require('../server/server');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const sinon = require('sinon');
 require('sinon-mongoose');
-const JWT = require('jsonwebtoken');
 
 const Utils = require('./../server/utils/utils.js');
-const UserRoutes = require('./../server/routes/user/handlers');
-const User = require('./../server/models/user').User;
+const { User } = require('./../server/models/user');
 
 describe('GET /api/user/me', () => {
-  it('should respond with a json message', function(done) {
+  it('should respond with a json message', (done) => {
     const token = Utils.generateMockJWT();
 
     const UserMock = sinon.mock(User);
     const expected = {
-      token: token,
+      token,
       _id: '123'
     };
 
@@ -30,7 +28,7 @@ describe('GET /api/user/me', () => {
       }
     };
 
-    server.inject(req, res => {
+    server.inject(req, (res) => {
       UserMock.verify();
       UserMock.restore();
       expect(res.statusCode).to.equal(200);
@@ -40,7 +38,7 @@ describe('GET /api/user/me', () => {
     });
   });
 
-  it('should respond with an error message', function(done) {
+  it('should respond with an error message', (done) => {
     const token = Utils.generateMockJWT();
 
     const UserMock = sinon.mock(User);
@@ -60,7 +58,7 @@ describe('GET /api/user/me', () => {
       }
     };
 
-    server.inject(req, res => {
+    server.inject(req, (res) => {
       UserMock.verify();
       UserMock.restore();
       expect(res.statusCode).to.equal(400);
@@ -71,7 +69,6 @@ describe('GET /api/user/me', () => {
 });
 
 describe('POST /api/user/login', () => {
-
   it('should login successfully', (done) => {
     const generateJWTMock = sinon
       .stub(Utils, 'generateJWT')
@@ -97,7 +94,7 @@ describe('POST /api/user/login', () => {
       }
     };
 
-    server.inject(req, res => {
+    server.inject(req, (res) => {
       UserMock.verify();
       UserMock.restore();
       generateJWTMock.restore();
@@ -131,7 +128,7 @@ describe('POST /api/user/login', () => {
       }
     };
 
-    server.inject(req, res => {
+    server.inject(req, (res) => {
       UserMock.verify();
       UserMock.restore();
       generateJWTMock.restore();
@@ -166,7 +163,7 @@ describe('POST /api/user/login', () => {
       }
     };
 
-    server.inject(req, res => {
+    server.inject(req, (res) => {
       UserMock.verify();
       UserMock.restore();
       generateJWTMock.restore();
