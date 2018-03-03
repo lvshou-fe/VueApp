@@ -16,5 +16,8 @@ if (process.env.NODE_ENV !== 'test') {
     pass: process.env.MONGODB_PASSWORD
   }).then(() => {
     console.log('-- mongodb connection open --');
+  }).catch((err) => {
+    console.log('-- error happened while connecting to mongodb --');
+    console.log(err);
   });
 }

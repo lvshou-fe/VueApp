@@ -4,7 +4,7 @@ const Inert = require('inert');
 const Good = require('good');
 
 require('dotenv').config();
-require('./config/db/database');
+require('./config/database');
 
 // Create server instance
 const server = new Hapi.Server();
