@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'building frontend..'
+echo 'Building frontend..'
 cd frontend
 rm -rf node_modules
 npm install --quiet --no-progress

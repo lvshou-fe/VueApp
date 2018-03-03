@@ -4,6 +4,6 @@
 SCRIPT_PATH="`dirname \"$0\"`"
 cd ${SCRIPT_PATH}
 
-echo 'Starting application..'
+echo 'Building a dockerfile..'
 
-docker-compose up -d app
+docker build -t vueapp -f Dockerfile ../

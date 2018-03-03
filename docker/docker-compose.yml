@@ -1,11 +1,13 @@
 version: '2.1'
-
+volumes:
+  mongodb:
 services:
-  app:
+  vueapp:
     image: 'vueapp:latest'
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
+    entrypoint: ../bin/docker_entrypoint.sh mongodb:27017
     restart: always
     links:
       - mongodb
@@ -23,4 +25,4 @@ services:
     env_file:
       - .env
     volumes:
-      - "/var/mongo/data:/bitnami"
+      - "mongodb:/bitnami"

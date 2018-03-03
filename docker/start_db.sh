@@ -4,4 +4,6 @@
 SCRIPT_PATH="`dirname \"$0\"`"
 cd ${SCRIPT_PATH}
 
+echo 'Starting db..'
+
 docker-compose up -d mongodb

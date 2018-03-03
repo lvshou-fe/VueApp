@@ -20,11 +20,15 @@ RUN mkdir -p /app/backend && cp -a /tmp/node_modules /app/backend
 WORKDIR /app
 COPY ./backend /app/backend
 
+# Add script for starting the app
+COPY ./bin /app/bin
+RUN chmod +x /app/bin/wait-for-it.sh /app/bin/docker_entrypoint.sh
+
 # Bundle fromtend from stage 0
-RUN mkdir -p app/frontend
 COPY --from=frontend /app/frontend/dist /app/frontend/dist
 
 # Run application
 EXPOSE 3334
 WORKDIR /app/backend
+
 CMD [ "npm", "run", "server:prod" ]
