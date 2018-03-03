@@ -1,0 +1,40 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  test:
+    environment:
+      - JWT_SECRET: 'JwtSecret'
+      - TOKEN_EXPIRY: 86400
+    docker:
+      - image: circleci/node:8.9.0
+    steps:
+      - checkout
+      - run: cd backend && npm install
+      - run: cd backend && npm run test
+  build:
+    docker:
+      - image: circleci/node:8.9.0
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.05.0-ce
+          docker_layer_caching: true
+      - run: |
+          TAG=1.0.$CIRCLE_SHA1
+          cd docker && bash ./build_dockerfile.sh $DOCKER_USER/vueapp:$TAG
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+          docker push $DOCKER_USER/vueapp:$TAG
+
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+
+

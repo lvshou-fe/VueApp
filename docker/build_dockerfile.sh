@@ -4,6 +4,8 @@
 SCRIPT_PATH="`dirname \"$0\"`"
 cd ${SCRIPT_PATH}
 
+TAG=$1
+
 echo 'Building a dockerfile..'
 
-docker build -t vueapp -f Dockerfile ../
+docker build -t "$1" -f Dockerfile ../
