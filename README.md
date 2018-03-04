@@ -1,4 +1,6 @@
-# VueApp project skeleton
+# VueApp hobby project
+
+[![Build Status](https://circleci.com/gh/ottoo/VueApp/tree/master.svg?style=shield&circle-token=7452b036509c90784a124fcb9e1c8742bc063400)](https://circleci.com/gh/ottoo/VueApp)
 
 This is an application skeleton built with Vue and HapiJS and Mongodb. Backend has a
 simple CRUD api for users operations. It also can serve the frontend and its
