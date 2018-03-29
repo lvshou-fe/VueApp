@@ -12,7 +12,13 @@ jobs:
       - image: circleci/node:8.9.0
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "backend/package.json" }}
       - run: cd backend && npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "backend/package.json" }}
+          paths:
+            - backend/node_modules
       - run: cd backend && npm run test
   build:
     docker:
