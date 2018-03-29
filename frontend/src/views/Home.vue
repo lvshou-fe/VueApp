@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="homeinner">
-      Homepage
+      Homepage test
     </div>
   </div>
 </template>

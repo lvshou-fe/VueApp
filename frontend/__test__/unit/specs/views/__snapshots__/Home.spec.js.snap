@@ -3,7 +3,7 @@
 exports[`Home.vue should render 1`] = `
 <div class="home">
   <div class="homeinner">
-    Homepage
+    Homepage test
   </div>
 </div>
 `;

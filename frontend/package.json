@@ -9,6 +9,7 @@
     "build": "node build/build.js",
     "test": "jest __test__/",
     "test:update-snapshot": "jest __test__/ -u",
+    "test:ci": "jest __test__/ --ci",
     "e2e": "node test/e2e/runner.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
