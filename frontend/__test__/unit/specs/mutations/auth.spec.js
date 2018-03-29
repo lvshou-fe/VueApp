@@ -11,7 +11,7 @@ describe('auth mutations', () => {
 
     mutations.LOGIN(state);
 
-    expect(state).to.deep.equal({
+    expect(state).toEqual({
       user: {
         isLoading: true,
         data: {}
@@ -33,7 +33,7 @@ describe('auth mutations', () => {
       password: 'testpassword'
     });
 
-    expect(state).to.deep.equal({
+    expect(state).toEqual({
       user: {
         isAuthenticated: true,
         isLoading: false,
@@ -55,7 +55,7 @@ describe('auth mutations', () => {
 
     mutations.LOGIN_FAILURE(state);
 
-    expect(state).to.deep.equal({
+    expect(state).toEqual({
       user: {
         isLoading: false,
         data: {}

@@ -1,5 +1,6 @@
 // helper for testing action with expected mutations
 // https://vuex.vuejs.org/en/testing.html
+
 /* eslint-disable */
 export const testAction = (action, payload, state, expectedMutations, done) => {
   let count = 0;
@@ -7,10 +8,10 @@ export const testAction = (action, payload, state, expectedMutations, done) => {
   // mock commit
   const commit = (type, payload) => {
     const mutation = expectedMutations[count];
-    expect(mutation.type).to.equal(type);
+    expect(mutation.type).toEqual(type);
 
     if (payload) {
-      expect(mutation.payload).to.deep.equal(payload);
+      expect(mutation.payload).toEqual(payload);
     }
 
     count++;
@@ -25,7 +26,7 @@ export const testAction = (action, payload, state, expectedMutations, done) => {
 
   // check if no mutations should have been dispatched
   if (expectedMutations.length === 0) {
-    expect(count).to.equal(0);
+    expect(count).toEqual(0);
     done();
   }
 };

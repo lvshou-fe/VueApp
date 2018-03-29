@@ -35,7 +35,12 @@ export default {
   },
   computed: {
     isSubmitBtnDisabled() {
-      return this.errors.has('username') || this.errors.has('password') || !this.model.username || !this.model.password;
+      return (
+        this.errors.has('username') ||
+        this.errors.has('password') ||
+        !this.model.username ||
+        !this.model.password
+      );
     }
   },
   methods: {
@@ -63,7 +68,7 @@ export default {
         .then(handleResponse)
         .catch((err) => {
           // eslint-disable-next-line
-          console.log('Error. Form validation failed!', err);
+          console.log("Error. Form validation failed!", err);
         });
     }
   }
@@ -79,7 +84,7 @@ export default {
   align-items: center;
   justify-content: center;
 
-  form[name='login-form'] {
+  form[name="login-form"] {
     display: flex;
     flex-direction: column;
     width: 300px;

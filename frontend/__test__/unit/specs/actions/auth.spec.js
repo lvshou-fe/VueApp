@@ -1,30 +1,30 @@
 import { testAction } from '../../helpers';
 
+import loginActions from '../../../../src/vuex/actions/login';
+
+jest.mock('../../../../src/api/login.js');
 // eslint-disable-next-line
-const actionsInjector = require('inject-loader!./../../../../src/vuex/actions/auth');
+import Api from '../../../../src/api/login';
 
 describe('auth actions', () => {
   it('login success', (done) => {
-    const actions = actionsInjector({
-      '../../api/auth': {
-        login() {
-          return Promise.resolve({
-            data: {
-              username: 'testuser',
-              userId: '123',
-              token: 'testtoken'
-            }
-          });
+    Api.login.mockImplementationOnce(() => new Promise((resolve) => {
+      resolve({
+        data: {
+          username: 'testuser',
+          userId: '123',
+          token: 'testtoken'
         }
-      }
-    });
+      });
+    }));
+    expect.assertions(3);
 
     const payload = {
       username: 'testuser',
       password: 'password'
     };
 
-    testAction(actions.default.LOGIN, payload, { user: payload }, [
+    testAction(loginActions.LOGIN, payload, { user: payload }, [
       { type: 'LOGIN' },
       {
         type: 'LOGIN_SUCCESS',
@@ -38,20 +38,18 @@ describe('auth actions', () => {
   });
 
   it('login failure', (done) => {
-    const actions = actionsInjector({
-      '../../api/auth': {
-        login() {
-          return Promise.reject();
-        }
-      }
-    });
+    Api.login.mockImplementationOnce(() => new Promise((resolve, reject) => {
+      reject();
+    }));
+
+    expect.assertions(2);
 
     const payload = {
       username: 'testuser',
       password: 'password'
     };
 
-    testAction(actions.default.LOGIN, payload, { user: payload }, [
+    testAction(loginActions.LOGIN, payload, { user: payload }, [
       { type: 'LOGIN' },
       { type: 'LOGIN_FAILURE' }
     ], done);

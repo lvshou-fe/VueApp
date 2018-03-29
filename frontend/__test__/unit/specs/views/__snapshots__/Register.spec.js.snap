@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register.vue should render 1`] = `
+<div class="register-container">
+  <form autocomplete="off" name="register-form">
+    <fieldset>
+      <legend>Account details</legend>
+      <div class="form-field">
+        <input name="username" type="text" placeholder="Username" data-vv-id="1" aria-required="true" aria-invalid="false"> <span class="field-error"><span style="display: none;">Username is required</span></span>
+      </div>
+      <div class="form-field">
+        <input name="password" type="password" placeholder="Password" data-vv-id="2" aria-required="true" aria-invalid="false"> <span class="field-error"><span style="display: none;">Password is required</span></span>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>Personal details</legend>
+      <div class="form-field">
+        <input name="firstName" type="text" placeholder="Firstname" data-vv-id="3" aria-required="true" aria-invalid="false"> <span class="field-error"><span style="display: none;">Firstname is required</span></span>
+      </div>
+      <div class="form-field">
+        <input name="lastName" type="text" placeholder="Lastname" data-vv-id="4" aria-required="true" aria-invalid="false"> <span class="field-error"><span style="display: none;">Lastname is required</span></span>
+      </div>
+    </fieldset>
+    <div class="submit-error"><span class="form-error" style="display: none;">Registration failed, try again.</span></div>
+    <button disabled="disabled" type="submit">Register</button>
+  </form>
+  <div class="registration-success">
+    <!---->
+  </div>
+</div>
+`;

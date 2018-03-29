@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login.vue should render 1`] = `
+<div class="login-container">
+  <form autocomplete="off" name="login-form">
+    <div class="form-field">
+      <input name="username" type="text" placeholder="Username" data-vv-id="1" aria-required="true" aria-invalid="false"> <span class="field-error"><span style="display: none;">Username is required</span></span>
+    </div>
+    <div class="form-field">
+      <input name="password" type="password" placeholder="Password" data-vv-id="2" aria-required="true" aria-invalid="false"> <span class="field-error"><span style="display: none;">Password is required</span></span>
+    </div>
+    <div class="submit-error"><span class="form-error" style="display: none;">Invalid username or password</span></div>
+    <button disabled="disabled" type="submit">Login</button>
+  </form>
+  <div class="forgotten-password-link">
+    <a href="#">Forgotten your password?</a>
+  </div>
+</div>
+`;
