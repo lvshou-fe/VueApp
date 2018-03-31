@@ -4,7 +4,6 @@ const jwtSecret = process.env.JWT_SECRET;
 const tokenExpiry = process.env.TOKEN_EXPIRY;
 
 class Utils {
-  // eslint-disable-next-line
   generateJWT(user) {
     const jwtData = {
       name: user.name,

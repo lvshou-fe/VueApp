@@ -18,7 +18,8 @@ module.exports = {
     'comma-dangle': 'off',
     'no-console': 'off',
     'no-shadow': 'off',
-    'quote-props': 'off'
+    'quote-props': 'off',
+    'class-methods-use-this': 'off'
   },
   'globals': {
     'io': false
