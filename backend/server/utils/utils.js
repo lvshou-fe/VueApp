@@ -12,9 +12,11 @@ class Utils {
       _id: user._id.toString()
     };
 
-    return JWT.sign(jwtData, jwtSecret, {
-      expiresIn: tokenExpiry
+    const jwt = JWT.sign(jwtData, jwtSecret, {
+      expiresIn: Number(tokenExpiry)
     });
+
+    return jwt;
   }
 
   generateMockJWT() {
