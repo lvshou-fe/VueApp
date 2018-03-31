@@ -24,6 +24,16 @@ class Utils {
       _id: '587bb173dbdb9a2894c099cb'
     });
   }
+
+  verifyEnvVars({ TOKEN_EXPIRY, JWT_SECRET }) {
+    if (typeof TOKEN_EXPIRY === 'undefined') {
+      throw new Error('Error. Jwt token expiry must be set.');
+    }
+
+    if (typeof JWT_SECRET === 'undefined') {
+      throw new Error('Error. Jwt secret must be set.');
+    }
+  }
 }
 
 module.exports = new Utils();

@@ -2,9 +2,12 @@ const Hapi = require('hapi');
 const HapiJwt2 = require('hapi-auth-jwt2');
 const Inert = require('inert');
 const Good = require('good');
+const { parsed } = require('dotenv').config();
 
-require('dotenv').config();
+const Utils = require('./utils/utils');
 require('./config/database');
+
+Utils.verifyEnvVars(parsed);
 
 // Create server instance
 const server = new Hapi.Server();
