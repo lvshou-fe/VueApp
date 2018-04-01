@@ -32,7 +32,7 @@ jobs:
           key: v1-be-dependency-cache-{{ checksum "backend/package.json" }}
           paths:
             - backend/node_modules
-      - run: cd backend && npm run test
+      - run: cd backend && npm run test:ci
   build:
     docker:
       - image: circleci/node:8.9.0

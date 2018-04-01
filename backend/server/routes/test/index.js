@@ -2,9 +2,13 @@ module.exports = [{
   method: 'GET',
   path: '/testauth',
   config: {
-    auth: 'jwt',
-    handler: (request, reply) => {
-      reply({ message: 'Auth successful!' });
+    handler: async (request) => {
+      try {
+        const credentials = await request.server.auth.test('default', request);
+        return { status: true, user: credentials.name };
+      } catch (err) {
+        return { status: false };
+      }
     }
   }
 }, {
@@ -12,8 +16,8 @@ module.exports = [{
   path: '/test',
   config: {
     auth: false,
-    handler: (request, reply) => {
-      reply({ message: 'OK' });
+    handler: () => {
+      return { message: 'OK' };
     }
   }
 }];

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
+const Utils = require('./../utils/utils');
 
-if (process.env.NODE_ENV !== 'test') {
+if (!Utils.isTesting()) {
   const authSource = process.env.MONGODB_AUTH_DB || process.env.MONGODB_DATABASE;
   const uri = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.MONGODB_DATABASE}?authSource=${authSource}`;
 
   mongoose.connect(uri, {
-    useMongoClient: true,
     poolSize: 5,
     socketTimeoutMS: 0,
     keepAlive: true,

@@ -9,71 +9,84 @@ require('./config/database');
 
 Utils.verifyEnvVars(parsed);
 
-// Create server instance
-const server = new Hapi.Server();
-server.connection({
-  port: 3334,
-  routes: {
-    cors: true,
-    files: {
-      relativeTo: __dirname
+const registerPlugins = async (server) => {
+  await server.register([{
+    plugin: Inert,
+    options: {}
+  }, {
+    plugin: HapiJwt2
+  }, {
+    plugin: require('./plugins/auth.strategy.plugin')
+  }, {
+    plugin: require('./plugins/prefix.plugin'),
+    routes: {
+      prefix: '/api'
     }
-  },
-  router: {
-    stripTrailingSlash: true
-  }
-});
+  }, {
+    plugin: require('./plugins/frontend.static.route.plugin')
+  }, {
+    plugin: require('./plugins/socket.io.plugin')
+  }]);
 
-// Register plugins, routes and start the server
-server.register([{
-  register: Inert,
-  options: {}
-}, {
-  register: HapiJwt2,
-  options: {}
-}, {
-  register: require('./plugins/auth.strategy.plugin')
-}, {
-  register: require('./plugins/prefix.plugin'),
-  routes: {
-    prefix: '/api'
+  if (!Utils.isTesting()) {
+    await server.register({
+      plugin: Good,
+      options: {
+        reporters: {
+          console: [{
+            module: 'good-squeeze',
+            name: 'Squeeze',
+            args: [{
+              error: '*',
+              response: '*'
+            }]
+          }, {
+            module: 'good-console'
+          }, 'stdout']
+        }
+      }
+    });
   }
-}, {
-  register: require('./plugins/frontend.static.route.plugin')
-}, {
-  register: require('./plugins/socket.io.plugin')
-}, {
-  register: require('hapi-cors'),
-  options: {
-    origins: ['*']
-  }
-}, {
-  register: Good,
-  options: {
-    ops: {
-      interval: 1000
+};
+
+const initialize = async ({ port }) => {
+  const server = new Hapi.Server({
+    port,
+    routes: {
+      cors: true,
+      files: {
+        relativeTo: __dirname
+      }
     },
-    reporters: {
-      console: [{
-        module: 'good-squeeze',
-        name: 'Squeeze',
-        args: [{
-          log: '*',
-          response: '*'
-        }]
-      }, {
-        module: 'good-console'
-      }, 'stdout']
+    router: {
+      stripTrailingSlash: true
     }
-  }
-}], (err) => {
-  if (err) {
-    throw err;
-  }
-
-  server.start(() => {
-    server.log('info', `Server running at: ${server.info.uri}`);
   });
-});
 
-module.exports = server;
+  await registerPlugins(server);
+
+  process.on('SIGINT', () => {
+    console.log('Server shutting down..');
+
+    server.stop({ timeout: 5000 }).then(() => {
+      console.log('Server shut down.');
+      process.exit(0);
+    });
+  });
+
+  process.on('unhandledRejection', (err) => {
+    console.log(err);
+    process.exit(1);
+  });
+
+  await server.start();
+  return server;
+};
+
+if (!Utils.isTesting()) {
+  initialize({ port: 3334 }).then((server) => {
+    console.log(`Server running at: ${server.info.uri}`);
+  });
+}
+
+module.exports = { initialize };

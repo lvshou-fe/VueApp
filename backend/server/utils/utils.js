@@ -26,14 +26,22 @@ class Utils {
     });
   }
 
-  verifyEnvVars({ TOKEN_EXPIRY, JWT_SECRET }) {
-    if (typeof TOKEN_EXPIRY === 'undefined') {
+  verifyEnvVars(env) {
+    if (this.isTesting()) {
+      return;
+    }
+
+    if (typeof env.TOKEN_EXPIRY === 'undefined') {
       throw new Error('Error. Jwt token expiry must be set.');
     }
 
-    if (typeof JWT_SECRET === 'undefined') {
+    if (typeof env.JWT_SECRET === 'undefined') {
       throw new Error('Error. Jwt secret must be set.');
     }
+  }
+
+  isTesting() {
+    return process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'ci';
   }
 }
 

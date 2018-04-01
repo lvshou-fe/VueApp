@@ -1,15 +1,13 @@
 const userRoutes = require('./../routes/user');
 const testRoutes = require('./../routes/test');
 
-exports.register = (server, options, next) => {
-  server.route([
-    ...userRoutes,
-    ...testRoutes
-  ]);
-  next();
-};
-
-exports.register.attributes = {
+exports.plugin = {
   name: 'api',
-  version: '1.0.0'
+  version: '1.0.0',
+  register: (server) => {
+    server.route([
+      ...userRoutes,
+      ...testRoutes
+    ]);
+  }
 };

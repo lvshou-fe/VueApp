@@ -5,9 +5,6 @@ const UserRoutes = require('./handlers');
 module.exports = [{
   method: 'GET',
   path: '/user/me',
-  config: {
-    auth: false
-  },
   handler: UserRoutes.meHandler
 },
 {
