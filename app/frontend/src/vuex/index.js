@@ -6,15 +6,18 @@ import createLogger from 'vuex/dist/logger';
 import state from './state';
 import actions from './actions';
 import mutations from './mutations';
+import { isServer } from '../util';
 
 Vue.use(Vuex);
 
 export function createStore() {
-  return new Vuex.Store({
+  const store = new Vuex.Store({
     state,
     actions,
     mutations,
-    plugins: [createLogger()],
+    plugins: !isServer() ? [createLogger()] : [],
     strict: process.env.NODE_ENV !== 'production'
   });
+
+  return store;
 }

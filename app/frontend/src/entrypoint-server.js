@@ -6,13 +6,13 @@ export default (context) => {
 
     router.push(context.url);
 
-    router.onReady(() => { // eslint-disable-line
+    router.onReady(() => {
       const matchedComponents = router.getMatchedComponents();
       if (!matchedComponents.length) {
         return reject({ code: 404 }); // eslint-disable-line
       }
 
-      Promise.all(matchedComponents.map((Component) => { // eslint-disable-line
+      Promise.all(matchedComponents.map((Component) => {
         if (Component.asyncData) {
           return Component.asyncData({
             store,

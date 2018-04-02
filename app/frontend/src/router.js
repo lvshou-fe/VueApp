@@ -4,6 +4,7 @@ import Login from './views/Login';
 import Register from './views/Register';
 import Home from './views/Home';
 import tokenService from './config/tokenService';
+import { isServer } from './util';
 
 Vue.use(Router);
 
@@ -42,7 +43,7 @@ export function createRouter(store) {
     ]
   });
 
-  if (typeof window !== 'undefined') {
+  if (!isServer()) {
     // eslint-disable-next-line
     router.beforeEach((to, from, next) => {
       if (from.name === 'login' && to.name === 'home') {

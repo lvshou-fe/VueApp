@@ -76,7 +76,7 @@ export default {
         .then(handleResponse)
         .catch((err) => {
           // eslint-disable-next-line
-          console.log('Error. Form validation failed!', err);
+          console.log("Error. Form validation failed!", err);
         });
     }
   }
@@ -92,7 +92,7 @@ export default {
   justify-content: center;
 }
 
-form[name='register-form'] {
+form[name="register-form"] {
   display: flex;
   flex-direction: column;
   width: 300px;

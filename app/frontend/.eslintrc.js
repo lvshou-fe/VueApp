@@ -24,6 +24,10 @@ module.exports = {
   },
   // add your custom rules here
   'rules': {
+    'consistent-return': 'off',
+    'array-callback-return': 'off',
+    'func-names': 'off',
+    'no-plusplus': 'off',
     'max-len': ['error', 120],
     'arrow-body-style': 'off',
     // reassigning happens in vuex store

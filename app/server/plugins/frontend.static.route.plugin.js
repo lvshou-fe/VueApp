@@ -1,19 +1,19 @@
 const path = require('path');
 const Boom = require('boom');
 const { createBundleRenderer } = require('vue-server-renderer');
-const clientManifest = require('../../frontend/dist/vue-ssr-client-manifest.json');
 
-const template = require('fs').readFileSync(path.join(__dirname, '..', '..', 'frontend', 'index.html'), 'utf-8');
+const devServer = require('../../frontend/build/dev-server');
 
-const render = (serverBundle, context) => {
+const isProduction = process.env.NODE_ENV === 'production';
+
+const createRenderer = (serverBundle, opts, context) => {
   const renderer = createBundleRenderer(serverBundle, {
     runInNewContext: false,
-    template,
-    clientManifest
+    template: opts.template,
+    clientManifest: opts.clientManifest
   });
   return new Promise((resolve, reject) => {
     renderer.renderToString(context, (err, html) => {
-      console.log(html);
       if (err) {
         if (err.code === 404) {
           return reject(Boom.notFound('Page not found'));
@@ -52,8 +52,23 @@ exports.plugin = {
       },
       handler: (request) => {
         const context = { url: request.url };
-        const serverBundle = require('../../frontend/dist-server/vue-ssr-server-bundle.json');
-        return render(serverBundle, context);
+
+        if (isProduction) {
+          const serverBundle = require('../../frontend/dist/vue-ssr-server-bundle.json');
+          const template = require('fs').readFileSync(path.resolve(__dirname, '../../frontend/index.html'), 'utf-8');
+          const clientManifest = require('../../frontend/dist/vue-ssr-client-manifest.json');
+          const opts = { clientManifest, template };
+          return createRenderer(serverBundle, opts, context);
+        }
+
+        return new Promise((resolve) => {
+          devServer(request.server, {
+            bundleUpdated: (bundle, opts) => {
+              return resolve(Promise.resolve(createRenderer(bundle, opts, context)));
+            },
+            templatePath: path.resolve(__dirname, '../../frontend/index.html')
+          });
+        });
       }
     });
   }
